@@ -12,16 +12,12 @@
                         <el-input v-model="loginFrom.account" placeholder="邮箱地址或用户ID" />
                     </el-form-item>
                     <el-form-item>
-                        <el-input v-model="loginFrom.password" placeholder="密码" type="password" show-password>
-                            <template #suffix>
-                                <el-icon class="el-input__icon"><View /></el-icon>
-                            </template>
-                        </el-input>
+                        <el-input v-model="loginFrom.password" placeholder="密码" type="password" show-password />
                     </el-form-item>
                     <div class="dont-know">
                         <el-link type="primary" :underline="false">不知道密码</el-link>
                     </div>
-                    <el-button class="form-button" type="primary" round disabled @click="handleLogin">登录</el-button>
+                    <el-button class="form-button" type="primary" round :disabled="isLoginDisabled" @click="handleLogin">登录</el-button>
                 </el-form>
             </div>
         </div>
@@ -30,15 +26,33 @@
 
 <script setup>
     // 导入ref
-    import { ref } from 'vue';
+    import { ref, computed } from 'vue';
+    // 导入login方法
+    import { login } from '@/api/auth/index.js';
+    // 引入token的工具类
+    import { setToken } from '@/utils/token/index.js';
     // 声明表单绑定值
     const loginFrom = ref({
         account: undefined,
         password: undefined
-    })
+    });
+    // 计算属性判断登录按钮是否应该禁用
+    const isLoginDisabled = computed(() => {
+        return !loginFrom.value.account || !loginFrom.value.password;
+    });
     // 声明登录方法
     function handleLogin() {
-        
+        login(loginFrom.value).then((res) => {
+            console.log("登录============》", res.data);
+            if (res.data.code == 200) {
+                console.log("测试1");
+                // 将token存储到pinia中
+                setToken("loveToken", res.data.data);
+                // TODO 查询用户权限和菜单，设置动态路由
+                // 将路由数据存储到pinia中
+                // 跳转页面
+            }
+        });
     }
 </script>
 
