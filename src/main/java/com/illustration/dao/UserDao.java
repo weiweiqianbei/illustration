@@ -1,10 +1,19 @@
 package com.illustration.dao;
 
 import com.illustration.entity.User;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface UserDao {
     User selectUserByAccount(@Param("account") String account, @Param("type") int type);
+
+    @Insert("INSERT INTO user (user_id, email, password, user_name) VALUES (#{userId}, #{email}, #{password}, #{userName})")
+    @Options(useGeneratedKeys = true, keyProperty = "id")
+    boolean insertUser(User user);
+
+    @Insert("INSERT INTO user_role (user_id, role_id) VALUES (#{id}, 100)")
+    boolean insertUserRole(User user);
 }

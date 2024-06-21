@@ -1,8 +1,9 @@
 package com.illustration.service;
 
-import com.illustration.entity.User;
-import com.illustration.result.ReturnValue;
+import com.illustration.entity.dto.LoginDto;
+import org.springframework.transaction.annotation.Transactional;
 
 public interface UserService {
-    public ReturnValue addUser(User user);
+    @Transactional
+    boolean addUser(LoginDto loginDto);
 }

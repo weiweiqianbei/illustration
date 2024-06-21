@@ -23,6 +23,7 @@ public class AuthController {
      */
     @PostMapping("/login")
     public ReturnValue login(@RequestBody LoginDto loginDto) {
+        log.info("parameter================》{}", loginDto);
         String login = authService.login(loginDto);
         return new ReturnValue(StateMsg.StatusMsg_200, login);
     }

@@ -32,7 +32,9 @@ public class SecurityConfig {
         // 关闭csrf
         http.csrf(AbstractHttpConfigurer::disable);
         // 配置拦截方式
-        http.authorizeHttpRequests(auth -> auth.requestMatchers("/user/login").permitAll()
+        http.authorizeHttpRequests(auth -> auth
+                .requestMatchers("/user/login").permitAll()
+                .requestMatchers("/user/register").permitAll()
                 .anyRequest().authenticated());
         // 开启form认证
 //        http.formLogin(Customizer.withDefaults());

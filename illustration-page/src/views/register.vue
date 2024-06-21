@@ -2,22 +2,19 @@
     <div class="account-container">
         <div class="account-background"></div>
         <div class="account-register">
-            <el-link class="botton-register" href="http://localhost/signup" :underline="false">注册账号</el-link>
+            <el-link class="botton-register" href="http://localhost/" :underline="false">登录</el-link>
         </div>
         <div class="account-form-container">
             <div class="account-form">
-                <h3>插画分析网站</h3>
-                <el-form  ref="formRef" :model="loginFrom"> 
+                <h3>注册账号</h3>
+                <el-form  ref="formRef" :model="registerFrom"> 
                     <el-form-item>
-                        <el-input v-model="loginFrom.account" placeholder="邮箱地址或用户ID" />
+                        <el-input v-model="registerFrom.account" placeholder="邮箱地址" />
                     </el-form-item>
                     <el-form-item>
-                        <el-input v-model="loginFrom.password" placeholder="密码" type="password" show-password />
+                        <el-input v-model="registerFrom.password" placeholder="密码" type="password" show-password />
                     </el-form-item>
-                    <div class="dont-know">
-                        <el-link type="primary" :underline="false">不知道密码</el-link>
-                    </div>
-                    <el-button class="account-button" type="primary" round :disabled="isLoginDisabled" @click="handleLogin">登录</el-button>
+                    <el-button class="account-button" type="primary" round :disabled="isLoginDisabled" @click="handleRegister">注册</el-button>
                 </el-form>
             </div>
         </div>
@@ -25,8 +22,8 @@
 </template>
 
 <script setup>
-    // 导入ref
     import { ref, computed } from 'vue';
+    import { register } from '@/api/auth/register.js';
     import { useStore } from 'vuex';
     import { useRouter } from 'vue-router';
     import { setToken } from '@/utils/token/index.js';
@@ -34,31 +31,33 @@
     const store = useStore();
     const router = useRouter();
 
-    // 声明表单绑定值
-    const loginFrom = ref({
-        account: undefined,
-        password: undefined
+    const registerFrom = ref({
+        account: '',
+        password: ''
     });
     // 计算属性判断登录按钮是否应该禁用
     const isLoginDisabled = computed(() => {
-        return !loginFrom.value.account || !loginFrom.value.password;
+        return !registerFrom.value.account || !registerFrom.value.password;
     });
-    // 声明登录方法
-    const handleLogin = async () => {
+
+    const handleRegister = async () => {
         try {
-            const res = await store.dispatch('login', loginFrom.value);
-            if (res.code == 200) {
-            // 将 token 存储到 pinia 中
-            setToken("myToken", res.data);
-            ElMessage({
-                message: '登录成功',
-                type: 'success',
-            });
-            // 跳转页面
-            router.push('/');
+            const b = await register(registerFrom.value);
+            if (b.code == 200) {
+                const res = await store.dispatch('login', registerFrom.value);
+                if (res.code == 200) {
+                // 将 token 存储到 pinia 中
+                setToken("myToken", res.data);
+                ElMessage({
+                    message: '注册成功',
+                    type: 'success',
+                });
+                // 跳转页面
+                router.push('/');
+                }
             }
         } catch (error) {
-            console.error("登录失败", error);
+            console.error("注册失败", error);
         }
     }
 </script>

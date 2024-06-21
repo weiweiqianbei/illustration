@@ -43,7 +43,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         log.info("URI===============》{}", uri);
         // 获取token
         String token = request.getHeader("Authorization");
-        if (token == null || "/user/login".equals(uri)) {
+        if (token == null || "/user/login".equals(uri) || "/user/register".equals(uri)) {
             // 放行
             doFilter(request, response, filterChain);
             return;

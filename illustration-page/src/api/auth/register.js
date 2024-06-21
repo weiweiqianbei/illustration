@@ -2,10 +2,10 @@
 import request from '@/utils/request.js';
 
 // 登录接口
-export async function login(data) {
+export async function register(data) {
     try {
         const response = await request({
-            url: '/user/login',
+            url: '/user/register',
             method: 'POST',
             data: data
         });
