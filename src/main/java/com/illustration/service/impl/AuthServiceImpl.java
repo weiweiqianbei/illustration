@@ -1,5 +1,6 @@
 package com.illustration.service.impl;
 
+import com.illustration.entity.User;
 import com.illustration.entity.dto.LoginDto;
 import com.illustration.entity.vo.LoginUserVO;
 import com.illustration.exception.CustomException;
@@ -59,12 +60,13 @@ public class AuthServiceImpl implements AuthService {
         String token = jwtUtil.createToken(map);
         return token;
     }
-    
-    private void getAuthentication() {
+
+    @Override
+    public User getUser() {
         // 获取Authentication
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         // 获取用户
-        LoginUserVO principal = (LoginUserVO)authentication.getPrincipal();
-
+        LoginUserVO loginUserVO = (LoginUserVO)authentication.getPrincipal();
+        return loginUserVO.getUser();
     }
 }

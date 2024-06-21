@@ -15,7 +15,7 @@ import HomePage from '@/layout/index.vue'; // 确保路径正确
 
 // 使用 store
 const store = useStore();
-const isAuthenticated = computed(() => store.getters.isAuthenticated);
+const isAuthenticated = computed(() => store.state.store.isAuthenticated);
 </script>
 
 <style lang="scss" scoped>

@@ -13,7 +13,7 @@
             <div class="header-user">
                 <el-dropdown  size="large"  trigger="click">
                     <el-button class="el-icon--right userInfo" size="large" circle>
-                        <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" />
+                        <el-avatar :src="user.headPortrait" />
                         <el-icon class="el-icon--right"><arrow-down /></el-icon>
                     </el-button>
                     <template #dropdown>
@@ -21,21 +21,21 @@
                             <el-row>
                                 <el-col :span="24">
                                     <div>
-                                        <el-avatar :size="64" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" />    
+                                        <el-avatar :size="64" :src="user.headPortrait" />    
                                     </div>
                                 </el-col>
                             </el-row>
                             <el-row>
                                 <el-col :span="24">
                                     <div>
-                                        <el-text class="mx-1"  size="large">张三</el-text>
+                                        <el-text class="mx-1"  size="large">{{ user.userName }}</el-text>
                                     </div>
                                 </el-col>
                             </el-row>
                             <el-row>
                                 <el-col :span="24">
                                     <div>
-                                        <el-text class="mx-1" type="info" size="small">zhangsan</el-text>
+                                        <el-text class="mx-1" type="info" size="small">{{ user.userId }}</el-text>
                                     </div>
                                 </el-col>
                             </el-row>
@@ -53,9 +53,12 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { Search } from '@element-plus/icons-vue';
-import { getToken } from '@/utils/token/index.js';
+import { useStore } from 'vuex';
+
+const store = useStore();
+const user = computed(() => store.state.myInfo.user);
 
 const handleSubmit = () => {
   if (headerSearch.value.trim() === '') {
@@ -72,12 +75,12 @@ const handleSubmit = () => {
 
 const headerSearch = ref('')
 
-const mytest = () => {
+const mytest = async () => {
     ElMessage({
-    message: 'Congrats, this is a success message.',
-    type: 'success',
-  });
-    console.log(getToken('myToken'));
+        message: 'Congrats, this is a success message.',
+        type: 'success',
+    });
+    console.log(user.name);
     console.log("OK");
 }
 </script>

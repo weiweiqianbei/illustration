@@ -50,6 +50,7 @@
             if (res.code == 200) {
             // 将 token 存储到 pinia 中
             setToken("myToken", res.data);
+            await store.dispatch('getMyInfo');
             ElMessage({
                 message: '登录成功',
                 type: 'success',

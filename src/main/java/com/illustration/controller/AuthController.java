@@ -1,5 +1,6 @@
 package com.illustration.controller;
 
+import com.illustration.entity.User;
 import com.illustration.entity.dto.LoginDto;
 import com.illustration.result.ReturnValue;
 import com.illustration.result.StateMsg;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
     @Autowired
     private AuthService authService;
+
     /**
      * 登录
      * @param loginDto
@@ -26,5 +28,17 @@ public class AuthController {
         log.info("parameter================》{}", loginDto);
         String login = authService.login(loginDto);
         return new ReturnValue(StateMsg.StatusMsg_200, login);
+    }
+
+    /**
+     * 获取当前用户信息
+     * @return
+     */
+    @GetMapping
+    public ReturnValue getUser() {
+        User user = authService.getUser();
+        user.setRoles(null);
+        user.setPerms(null);
+        return new ReturnValue(StateMsg.StatusMsg_200, user);
     }
 }
