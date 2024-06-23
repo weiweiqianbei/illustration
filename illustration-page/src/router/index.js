@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 
 import HomePage from '@/views/home.vue';
 import RegisterPage from '@/views/register.vue';
+import CreateIllustrationPage from '@/views/illustration/create/create.vue';
 
 // 配置路由规则
 const constRoutes = [
@@ -12,10 +13,18 @@ const constRoutes = [
     children: [
       {
         path: '/',
-        name: 'cs',
+        name: 'index',
         component: () => import('@/views/index.vue'),
         meta: {
           requiresAuth: true
+        }
+      },
+      {
+        path: '/illustration/create',
+        name: 'CreateIllustration',
+        component: CreateIllustrationPage,
+        meta: {
+          title: '插画投稿'
         }
       }
     ]

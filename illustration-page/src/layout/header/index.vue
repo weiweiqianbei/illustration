@@ -1,6 +1,10 @@
 <template>
     <div class="header">
-        <div class="header-left"></div>
+        <div class="header-left">
+            <el-link href="http://localhost/" :underline="false">
+                <el-image style="width: 64px; height: 64px" src="http://localhost/images/logo/logo.png" fit="cover" />
+            </el-link>
+        </div>
         <div class="header-center" @submit.prevent="handleSubmit">
             <form class="header-from">
                 <el-input v-model="headerSearch" size="large" placeholder="搜索作品" :prefix-icon="Search" />
@@ -8,7 +12,7 @@
         </div>
         <div class="header-right">
             <div class="header-submit">
-                <el-button style="font-weight: bold;" size="large" round @click='mytest'>投稿作品</el-button>
+                <el-button style="font-weight: bold;" size="large" round @click='createIllustration'>投稿作品</el-button>
             </div>
             <div class="header-user">
                 <el-dropdown  size="large"  trigger="click">
@@ -56,7 +60,9 @@
 import { ref, computed } from 'vue';
 import { Search } from '@element-plus/icons-vue';
 import { useStore } from 'vuex';
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
 const store = useStore();
 const user = computed(() => store.state.myInfo.user);
 
@@ -75,13 +81,8 @@ const handleSubmit = () => {
 
 const headerSearch = ref('')
 
-const mytest = async () => {
-    ElMessage({
-        message: 'Congrats, this is a success message.',
-        type: 'success',
-    });
-    console.log(user.name);
-    console.log("OK");
+const createIllustration = () => {
+    router.push('/illustration/create');
 }
 </script>
 

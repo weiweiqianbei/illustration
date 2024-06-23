@@ -1,5 +1,5 @@
 <template>
-    <div class="common-layout">
+    <div>
       <el-container>
         <el-header>
             <Header />
@@ -17,5 +17,4 @@ import Main from './main/index.vue'
 </script>
 
 <style lang="scss" scoped>
-
 </style>
