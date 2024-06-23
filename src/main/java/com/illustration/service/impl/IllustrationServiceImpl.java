@@ -3,6 +3,7 @@ package com.illustration.service.impl;
 import com.illustration.dao.IllustraionDao;
 import com.illustration.entity.Illustraion;
 import com.illustration.entity.dto.UploadDto;
+import com.illustration.entity.vo.IllustraionVO;
 import com.illustration.exception.CustomException;
 import com.illustration.service.AuthService;
 import com.illustration.service.IllustrationService;
@@ -14,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 @Service
 @Slf4j
@@ -54,5 +56,16 @@ public class IllustrationServiceImpl implements IllustrationService {
         } catch (IOException e) {
             throw new CustomException(500, "图片上传失败");
         }
+    }
+
+    @Override
+    public List<IllustraionVO> getIllustraions(int page) {
+        int limit = 24;
+        return illustraionDao.getIllustraions((page-1)*limit, limit);
+    }
+
+    @Override
+    public Long getIllustraionsCount() {
+        return (illustraionDao.getIllustraionsCount()/24)+1;
     }
 }

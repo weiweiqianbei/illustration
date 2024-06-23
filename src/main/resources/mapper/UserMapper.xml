@@ -12,7 +12,7 @@
         <result column="head_portrait" property="headPortrait"/>
         <result column="create_time" property="createTime"/>
         <result column="update_time" property="updateTime"/>
-        <collection property="roles" javaType="List" resultMap="RoleResultMap"/>
+        <collection property="roles" resultMap="RoleResultMap"/>
     </resultMap>
     <resultMap id="RoleResultMap" type="Role">
         <id column="role_id" property="id"/>
@@ -22,7 +22,7 @@
         <result column="create_time" property="createTime"/>
         <result column="update_time" property="updateTime"/>
     </resultMap>
-    <select id="selectUserByAccount" resultType="User" resultMap="UserResultMap">
+    <select id="selectUserByAccount" resultMap="UserResultMap">
         SELECT u.id, u.user_id, u.email, u.password, u.user_name, u.head_portrait, u.create_time, u.update_time,
         r.id role_id, r.role_label, r.role_name, r.remark, r.create_time, r.update_time
         FROM user u LEFT JOIN user_role ON u.id=user_role.user_id

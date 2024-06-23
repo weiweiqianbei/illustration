@@ -3,98 +3,49 @@
         <ul class="index-datas">
             <li v-for="(item, index) in items" :key="index">
                 <div class="index-data-img">
-                    <el-link href="https://element-plus.org" target="_blank" :underline="false">
-                        <el-image style="width: 184px; height: 184px" :src="url" fit="cover" />
+                    <el-link :href="item.path" target="_blank" :underline="false">
+                        <el-image style="width: 184px; height: 184px" :src="item.path" fit="cover" />
                     </el-link>
                 </div>
                 <div class="index-data">
-                    <el-link style="font-weight: bold;" href="https://element-plus.org" target="_blank" :underline="false">一只小鸟</el-link>
+                    <el-link style="font-weight: bold;" href="https://element-plus.org" target="_blank" :underline="false">{{ item.title }}</el-link>
                 </div>
                 <div class="index-data">
                     <el-link class="index-data-user" href="https://element-plus.org" target="_blank" :underline="false">
-                        <el-avatar style="margin-right: 4px;" :size="24" src="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png" />
-                        张三
+                        <el-avatar style="margin-right: 4px;" :size="24" :src="item.user.headPortrait" />
+                        {{ item.user.userName }}
                     </el-link>
                 </div>
             </li>
         </ul>
     </div>
     <div class="index-page">
-        <el-pagination background layout="prev, pager, next" :total="1000" @current-change="myTest" />
+        <el-pagination :current-page="pager.p" background layout="prev, pager, next" :total="total" @current-change="myTest" />
     </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
+import { useStore } from 'vuex';
+import { useRouter } from 'vue-router';
 
-const items = ref([
-  {
-    id: 1,
-    name: 'Item 1',
-    imageUrl: 'item1.jpg'
-  },
-  {
-    id: 2,
-    name: 'Item 2',
-    imageUrl: 'item2.jpg'
-  },
-  {
-    id: 3,
-    name: 'Item 3',
-    imageUrl: 'item3.jpg'
-  },
-  {
-    id: 2,
-    name: 'Item 2',
-    imageUrl: 'item2.jpg'
-  },
-  {
-    id: 3,
-    name: 'Item 3',
-    imageUrl: 'item3.jpg'
-  },
-  {
-    id: 2,
-    name: 'Item 2',
-    imageUrl: 'item2.jpg'
-  },
-  {
-    id: 3,
-    name: 'Item 3',
-    imageUrl: 'item3.jpg'
-  },
-  {
-    id: 2,
-    name: 'Item 2',
-    imageUrl: 'item2.jpg'
-  },
-  {
-    id: 3,
-    name: 'Item 3',
-    imageUrl: 'item3.jpg'
-  },
-  {
-    id: 2,
-    name: 'Item 2',
-    imageUrl: 'item2.jpg'
-  },
-  {
-    id: 3,
-    name: 'Item 3',
-    imageUrl: 'item3.jpg'
-  },
-  {
-    id: 2,
-    name: 'Item 2',
-    imageUrl: 'item2.jpg'
-  },
-  {
-    id: 3,
-    name: 'Item 3',
-    imageUrl: 'item3.jpg'
-  }
-]);
-const url = 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg';
+const store = useStore();
+
+const router = useRouter();
+const DEFAULT_PAGE_NUMBER = 1;
+const pager = ref({
+  p: router.currentRoute.value.query.p ? parseInt(router.currentRoute.value.query.p) : DEFAULT_PAGE_NUMBER
+});
+
+const items = ref([]);
+const total = ref();
+
+onMounted(async () => {
+  const res = await store.dispatch('getIllustrations', pager.value);
+  items.value = res.data.illustraions;
+  total.value = res.data.total;
+  console.log(items.value);
+})
 const myTest =  async (Number) => {
     console.log(Number);
 }

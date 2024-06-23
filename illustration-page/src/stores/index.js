@@ -3,6 +3,7 @@ import { createStore } from 'vuex';
 import { login } from '@/api/auth/index.js';
 
 import myInfo from './myInfo.js';
+import illustration from './illustrations.js';
 
 const store = createStore({
     modules: {
@@ -42,5 +43,6 @@ const store = createStore({
 });
 
 store.registerModule('myInfo', myInfo);
+store.registerModule('illustration', illustration);
 
 export default store;

@@ -3,4 +3,22 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.illustration.dao.IllustraionDao">
+    <resultMap id="IllustraionVOMap" type="com.illustration.entity.vo.IllustraionVO">
+        <id column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="title" property="title"/>
+        <result column="path" property="path"/>
+        <result column="remark" property="remark"/>
+        <collection property="user" resultMap="UserMap"/>
+    </resultMap>
+    <resultMap id="UserMap" type="User">
+        <result column="user_name" property="userName"/>
+        <result column="head_portrait" property="headPortrait"/>
+    </resultMap>
+    <select id="getIllustraions" resultMap="IllustraionVOMap">
+        SELECT l.id, l.user_id, l.title, l.path, l.remark, u.user_name, u.head_portrait
+        FROM illustraion l LEFT JOIN user u ON l.user_id=u.id
+        ORDER BY id DESC
+        LIMIT #{limit} OFFSET #{page};
+    </select>
 </mapper>
