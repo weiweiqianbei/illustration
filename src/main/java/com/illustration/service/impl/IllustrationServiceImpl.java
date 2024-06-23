@@ -44,7 +44,6 @@ public class IllustrationServiceImpl implements IllustrationService {
             }
             filename = RandomUtil.randomNumbers(6) + string;
             String filePath = uploadDirectory + nextDirectory + filename;
-            log.info("fileName===========>{}", filePath);
             file.transferTo(new File(filePath));
 
             illustraion.setUserId(userId);
