@@ -48,15 +48,15 @@
         try {
             const res = await store.dispatch('login', loginFrom.value);
             if (res.code == 200) {
-            // 将 token 存储到 pinia 中
-            setToken("myToken", res.data);
-            await store.dispatch('getMyInfo');
-            ElMessage({
-                message: '登录成功',
-                type: 'success',
-            });
-            // 跳转页面
-            router.push('/');
+                // 将 token 存储到 pinia 中
+                setToken("myToken", res.data);
+                await store.dispatch('getMyInfo');
+                ElMessage({
+                    message: '登录成功',
+                    type: 'success',
+                });
+                // 跳转页面
+                router.go(0);
             }
         } catch (error) {
             console.error("登录失败", error);

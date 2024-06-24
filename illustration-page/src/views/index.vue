@@ -40,11 +40,17 @@ const pager = ref({
 const items = ref([]);
 const totalItems = ref(0);
 
+const fetchData = async () => {
+    const res = await store.dispatch('getIllustrations', pager.value);
+    items.value = res.data.illustraions;
+    totalItems.value = res.data.total;
+}
+
 onMounted(async () => {
-  const res = await store.dispatch('getIllustrations', pager.value);
-  items.value = res.data.illustraions;
-  totalItems.value = res.data.total;
-})
+    console.log('----------------------------------------------------')
+    fetchData();
+});
+
 const myTest =  async (Number) => {
     console.log(Number);
 }
