@@ -20,7 +20,7 @@
         </ul>
     </div>
     <div class="index-page">
-        <el-pagination :current-page="pager.p" background layout="prev, pager, next" :total="total" @current-change="myTest" />
+        <el-pagination v-model:currentPage="pager.p" :page-size="24" background layout="prev, pager, next" :total="totalItems" @current-change="myTest" />
     </div>
 </template>
 
@@ -38,13 +38,12 @@ const pager = ref({
 });
 
 const items = ref([]);
-const total = ref();
+const totalItems = ref(0);
 
 onMounted(async () => {
   const res = await store.dispatch('getIllustrations', pager.value);
   items.value = res.data.illustraions;
-  total.value = res.data.total;
-  console.log(items.value);
+  totalItems.value = res.data.total;
 })
 const myTest =  async (Number) => {
     console.log(Number);

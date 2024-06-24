@@ -1,7 +1,7 @@
 // 请求接口
 import request from '@/utils/request.js';
 
-// 登录接口
+// 注册接口
 export async function register(data) {
     try {
         const response = await request({
@@ -12,7 +12,7 @@ export async function register(data) {
         return response.data;
     } catch (error) {
         // 可以在这里处理异常情况，比如网络错误等
-        console.error('登录请求出错', error);
+        console.error('注册请求出错', error);
         throw error; // 继续抛出错误，让调用方处理
     }
 }

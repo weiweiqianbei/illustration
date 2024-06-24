@@ -66,7 +66,7 @@ public class SecurityConfig {
         corsConfiguration.setAllowedOrigins(Arrays.asList("*"));    // 允许的域名
 //        corsConfiguration.setAllowedOrigins(Arrays.asList("http://192.168.43.83:5173", "http://localhost:5173"));
         corsConfiguration.setAllowedHeaders(Arrays.asList("*"));    // 允许的头部
-        corsConfiguration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));  // 允许的方法
+        corsConfiguration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));  // 允许的方法
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", corsConfiguration);

@@ -1,10 +1,7 @@
 package com.illustration.dao;
 
 import com.illustration.entity.User;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Options;
-import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.*;
 
 @Mapper
 public interface UserDao {
@@ -16,4 +13,7 @@ public interface UserDao {
 
     @Insert("INSERT INTO user_role (user_id, role_id) VALUES (#{id}, 100)")
     boolean insertUserRole(User user);
+
+    @Update("UPDATE user SET user_id = #{userId}, email = #{email}, user_name = #{userName}, head_portrait = #{headPortrait}, update_time = CURRENT_TIMESTAMP WHERE id = #{id}")
+    void updateUser(User user);
 }

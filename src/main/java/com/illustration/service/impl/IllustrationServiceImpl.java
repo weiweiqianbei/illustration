@@ -66,6 +66,6 @@ public class IllustrationServiceImpl implements IllustrationService {
 
     @Override
     public Long getIllustraionsCount() {
-        return (illustraionDao.getIllustraionsCount()/24)+1;
+        return illustraionDao.getIllustraionsCount();
     }
 }
