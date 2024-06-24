@@ -25,6 +25,8 @@ public class IllustrationServiceImpl implements IllustrationService {
     @Autowired
     private IllustraionDao illustraionDao;
 
+    private static final int LIMIT = 24;
+
     @Override
     public void handleFileUpload(MultipartFile file, UploadDto data) {
         String uploadDirectory = "D:/Users/伟伟前辈/Poject/illustration/illustration-page/public/";
@@ -59,13 +61,12 @@ public class IllustrationServiceImpl implements IllustrationService {
     }
 
     @Override
-    public List<IllustraionVO> getIllustraions(int page) {
-        int limit = 24;
-        return illustraionDao.getIllustraions((page-1)*limit, limit);
+    public List<IllustraionVO> getIllustraions(int page, String key) {
+        return illustraionDao.getIllustraions((page-1)*LIMIT, LIMIT, key);
     }
 
     @Override
-    public Long getIllustraionsCount() {
-        return illustraionDao.getIllustraionsCount();
+    public Long getIllustraionsCount(String key) {
+        return illustraionDao.getIllustraionsCount(key);
     }
 }

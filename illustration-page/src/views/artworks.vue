@@ -25,14 +25,16 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed, watch } from 'vue';
 import { useStore } from 'vuex';
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 
 const store = useStore();
 
 const router = useRouter();
+const route = useRoute();
 const DEFAULT_PAGE_NUMBER = 1;
+const decodedFindkey = computed(() => decodeURIComponent(route.params.findkey || ''));
 const pager = ref({
     p: router.currentRoute.value.query.p ? parseInt(router.currentRoute.value.query.p) : DEFAULT_PAGE_NUMBER
 });
@@ -41,7 +43,9 @@ const items = ref([]);
 const totalItems = ref(0);
 
 const fetchData = async () => {
-    const res = await store.dispatch('getIllustrations', pager.value);
+    const key = decodedFindkey.value;
+    const p = pager.value;
+    const res = await store.dispatch('getIllustrationsByKey', { key, p });
     items.value = res.data.illustraions;
     totalItems.value = res.data.total;
 }

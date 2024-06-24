@@ -26,6 +26,14 @@ const constRoutes = [
         meta: {
           title: '插画投稿'
         }
+      },
+      {
+        path: '/tags/:findkey/artworks',
+        name: 'Artworks',
+        component: () => import('@/views/artworks.vue'),
+        meta: {
+          title: route => `#${decodeURIComponent(route.params.findkey)} | 作品`
+        }
       }
     ]
   },
@@ -41,13 +49,17 @@ const constRoutes = [
 
 // 创建路由
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHistory(),
   // 使用路由规则常量
   routes: constRoutes
 })
 
 router.beforeEach((to, from, next) => {
-  document.title = to.meta.title || '插画分享网站';
+  if (to.meta.title) {
+    document.title = typeof to.meta.title === 'function' ? to.meta.title(to) : to.meta.title;
+  } else {
+    document.title = '插画分享网站'; // 设置默认标题
+  }
   // if (to.meta.requiresAuth && !sessionStorage.getItem('isAuthenticated')) {
   //   // 如果需要登录并且未登录，则重定向到登录页面
   //   next('/');

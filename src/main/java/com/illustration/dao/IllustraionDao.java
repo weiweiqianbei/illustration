@@ -14,8 +14,7 @@ public interface IllustraionDao {
     @Insert("INSERT INTO illustraion (user_id, title, path, remark) VALUES (#{userId}, #{title}, #{path}, #{remark})")
     void addIllustraion(Illustraion illustraion);
 
-    List<IllustraionVO> getIllustraions(@Param("page") int page, @Param("limit") int limit);
+    List<IllustraionVO> getIllustraions(@Param("page") int page, @Param("limit") int limit, @Param("findkey") String findkey);
 
-    @Select("SELECT COUNT(*) FROM illustraion")
-    Long getIllustraionsCount();
+    Long getIllustraionsCount(@Param("findkey") String findkey);
 }

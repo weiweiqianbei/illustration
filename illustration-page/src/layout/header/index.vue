@@ -150,10 +150,12 @@ const uploadRef = ref(null);
 const hasFile = ref(false);
 
 const handleSubmit = () => {
-  if (headerSearch.value.trim() === '') {
+    if (headerSearch.value.trim() === '') {
+        router.push('/')
+        return;
+    }
+    window.location.href = `/tags/${headerSearch.value}/artworks`;
     return;
-  }
-  console.log('提交搜索内容:', headerSearch.value);
 };
 
 const headerSearch = ref('')
@@ -175,7 +177,7 @@ const userHandleSuccess = async (response, file) => {
         plain: true,
     })
     centerDialogVisible.value = false;
-    router.replace({ path: router.currentRoute.value.path, query: router.currentRoute.value.query });
+    router.go(0);
 }
 
 // 自定义上传请求方法

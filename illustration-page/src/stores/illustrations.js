@@ -1,5 +1,5 @@
 // store/illustration.js
-import { getIllustrations } from "@/api/auth/illustration.js";
+import { getIllustrations, getIllustrationsByKey } from "@/api/auth/illustration.js";
 
 const illustration = {
     state: {
@@ -22,6 +22,20 @@ const illustration = {
         async getIllustrations({ commit }, p) {
             try {
                 const res = await getIllustrations(p);
+                if (res.code == 200) {
+                    commit('setItems', res.data.illustraions);
+                    commit('setTotal', res.data.total);
+                    commit('setCurrentPage', res.data.currentPage);
+                    return res;
+                }
+            } catch (error) {
+                console.error("获取插画列表失败", error);
+                throw error;
+            }
+        },
+        async getIllustrationsByKey({ commit }, { key, p }) {
+            try {
+                const res = await getIllustrationsByKey(key,p);
                 if (res.code == 200) {
                     commit('setItems', res.data.illustraions);
                     commit('setTotal', res.data.total);

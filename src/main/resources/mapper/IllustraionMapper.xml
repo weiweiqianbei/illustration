@@ -18,7 +18,20 @@
     <select id="getIllustraions" resultMap="IllustraionVOMap">
         SELECT l.id, l.user_id, l.title, l.path, l.remark, u.user_name, u.head_portrait
         FROM illustraion l LEFT JOIN user u ON l.user_id=u.id
+        <where>
+            <if test="findkey != null">
+                title LIKE #{findkey} OR remark LIKE #{findkey}
+            </if>
+        </where>
         ORDER BY id DESC
-        LIMIT #{limit} OFFSET #{page};
+        LIMIT #{limit} OFFSET #{page}
+    </select>
+    <select id="getIllustraionsCount" resultType="long">
+        SELECT COUNT(*) FROM illustraion
+        <where>
+            <if test="findkey != null">
+                title LIKE #{findkey} OR remark LIKE #{findkey}
+            </if>
+        </where>
     </select>
 </mapper>

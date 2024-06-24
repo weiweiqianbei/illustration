@@ -6,7 +6,7 @@
         </div>
         <div class="account-form-container">
             <div class="account-form">
-                <h3>插画分析网站</h3>
+                <h3>插画分享网站</h3>
                 <el-form  ref="formRef" :model="loginFrom"> 
                     <el-form-item>
                         <el-input v-model="loginFrom.account" placeholder="邮箱地址或用户ID" />
