@@ -36,9 +36,10 @@ request.interceptors.response.use((response) => {
     } else if (code === 400) {
         ElMessage.error(msg);
     } else if (code === 401) {
-        ElMessage.warning('请重新登录.');
         window.sessionStorage.clear();  // 清除本地存储
-        router.push('/');  // 跳转到登录页面
+        window.localStorage.clear();
+        window.location.href = '/';
+        ElMessage.warning('请重新登录.');
         return Promise.reject('需要重新登录');
     } else if (code === 403) {
         ElMessage.error('权限不足.');
@@ -52,9 +53,10 @@ request.interceptors.response.use((response) => {
     if (error.response) {
         const { message, code } = error.response.data;
         if (code === 401) {
-            ElMessage.warning('请重新登录.');
             window.sessionStorage.clear();  // 清除本地存储
-            router.push('/');  // 跳转到登录页面
+            window.localStorage.clear();
+            window.location.href = '/';
+            ElMessage.warning('请重新登录.');
         }
         ElMessage.error(message);
     } else {

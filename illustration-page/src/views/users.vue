@@ -2,10 +2,10 @@
     <div>
         <div class="header">
             <div class="header-img">
-                <el-avatar :size="96" :src="user.headPortrait" />
+                <el-avatar :size="96" :src="oneUser.headPortrait" />
             </div>
             <div class="header-txt">
-                <h2>{{ user.userName }}</h2>
+                <h2>{{ oneUser.userName }}</h2>
             </div>
         </div>
     </div>
@@ -48,6 +48,7 @@ import { useRouter, useRoute } from 'vue-router';
 import { useStore } from 'vuex';
 import { Delete } from '@element-plus/icons-vue';
 import { deleteIllustrations } from '@/api/auth/illustration.js';
+import { getOneUser } from '@/api/auth/myInfo.js';
 
 const router = useRouter();
 const route = useRoute();
@@ -62,6 +63,10 @@ const user = computed(() => store.state.myInfo.user);
 const items = ref([]);
 const totalItems = ref(0);
 const shouldShowButton = ref(false);
+const oneUser = ref({
+    headPortrait: '',
+    userName: ''
+});
 
 const fetchData = async () => {
     if (user.value.id == theUerID.value) {
@@ -69,6 +74,8 @@ const fetchData = async () => {
     } else {
         shouldShowButton.value = false;
     }
+    const response = await getOneUser(theUerID.value);
+    oneUser.value = response.data;
     document.title = user.value.userName;
     const UID = theUerID.value;
     const p = pager.value;

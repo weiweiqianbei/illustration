@@ -47,7 +47,7 @@
                         <el-dropdown-menu>
                             <el-dropdown-item @click="myUserInfo">我的作品</el-dropdown-item>
                             <el-dropdown-item @click="centerDialogVisible = true">设置</el-dropdown-item>
-                            <el-dropdown-item divided>退出登录</el-dropdown-item>
+                            <el-dropdown-item @click="logOut" divided>退出登录</el-dropdown-item>
                         </el-dropdown-menu>
                     </template>
                 </el-dropdown>
@@ -139,6 +139,7 @@ import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
 import { Plus } from '@element-plus/icons-vue'
 import { updateUserInfo } from '@/api/auth/myInfo.js';
+import { logout } from '@/api/auth/index.js';
 
 const router = useRouter();
 const store = useStore();
@@ -203,8 +204,16 @@ const updateUser = async () => {
         return;
     }
 }
+
 const myUserInfo = () => {
     window.location.href = `/users/${ user.value.id }`;
+}
+
+const logOut = () => {
+    logout();
+    window.sessionStorage.clear();  // 清除本地存储
+    window.localStorage.clear();
+    window.location.href = '/';
 }
 </script>
 

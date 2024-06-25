@@ -39,3 +39,18 @@ export async function updateUserInfo(file, data) {
         throw error; // 继续抛出错误，让调用方处理
     }
 }
+
+// 获取某个人信息接口
+export async function getOneUser(id) {
+    try {
+        const response = await request({
+            url: '/user/one/' + id,
+            method: 'GET'
+        });
+        return response.data;
+    } catch (error) {
+        // 可以在这里处理异常情况，比如网络错误等
+        console.error('获取信息请求出错', error);
+        throw error; // 继续抛出错误，让调用方处理
+    }
+}

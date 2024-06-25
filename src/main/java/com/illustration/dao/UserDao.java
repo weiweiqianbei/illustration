@@ -16,4 +16,7 @@ public interface UserDao {
 
     @Update("UPDATE user SET user_id = #{userId}, email = #{email}, user_name = #{userName}, head_portrait = #{headPortrait}, update_time = CURRENT_TIMESTAMP WHERE id = #{id}")
     void updateUser(User user);
+
+    @Select("SELECT user_name, head_portrait FROM user WHERE id=#{id}")
+    User getUserById(@Param("id") long id);
 }

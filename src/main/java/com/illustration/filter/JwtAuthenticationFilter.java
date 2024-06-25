@@ -3,6 +3,7 @@ package com.illustration.filter;
 import com.illustration.entity.User;
 import com.illustration.entity.vo.LoginUserVO;
 import com.illustration.result.GlobalExceptionHandler;
+import com.illustration.result.ReturnValue;
 import com.illustration.utils.JsonUtil;
 import com.illustration.utils.JwtUtil;
 import com.illustration.utils.RedisUtil;
@@ -62,6 +63,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         if (uuid == null) {
             response.setContentType("application/json;charset=utf-8");
             response.getWriter().write(JsonUtil.serialize(new GlobalExceptionHandler.ErrorResponse(401, "请重新登录")));
+            return;
+        }
+        if ("/user/logout".equals(uri)) {
+            redisUtil.delete(uuid);
+            response.setContentType("application/json;charset=utf-8");
+            response.getWriter().write(JsonUtil.serialize(new ReturnValue<>()));
             return;
         }
         // 从Redis中获取用户信息

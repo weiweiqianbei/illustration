@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import static com.illustration.result.StateMsg.StatusMsg_200;
 import static com.illustration.result.StateMsg.StatusMsg_400;
 
 @RestController
@@ -34,5 +35,12 @@ public class UserController {
         User user = JsonUtil.deserialize(data, User.class);
         userService.updateUser(file, user);
         return new ReturnValue();
+    }
+
+    @GetMapping("/one/{id}")
+    public ReturnValue getUserById(@PathVariable Long id) {
+        log.info("parameter================》{}", id);
+        User user = userService.getUserById(id);
+        return new ReturnValue(StatusMsg_200, user);
     }
 }

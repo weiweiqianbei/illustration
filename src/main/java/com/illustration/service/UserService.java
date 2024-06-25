@@ -10,4 +10,6 @@ public interface UserService {
     boolean addUser(LoginDto loginDto);
 
     void updateUser(MultipartFile file, User user);
+
+    User getUserById(Long id);
 }

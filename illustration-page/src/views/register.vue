@@ -46,14 +46,15 @@
             if (b.code == 200) {
                 const res = await store.dispatch('login', registerFrom.value);
                 if (res.code == 200) {
-                // 将 token 存储到 pinia 中
-                setToken("myToken", res.data);
-                ElMessage({
-                    message: '注册成功',
-                    type: 'success',
-                });
-                // 跳转页面
-                router.push('/');
+                    // 将 token 存储到 pinia 中
+                    setToken("myToken", res.data);
+                    await store.dispatch('getMyInfo');
+                    ElMessage({
+                        message: '注册成功',
+                        type: 'success',
+                    });
+                    // 跳转页面
+                    router.push('/');
                 }
             }
         } catch (error) {
