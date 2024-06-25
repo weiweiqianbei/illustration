@@ -32,8 +32,8 @@ public class IllustrationController {
     @GetMapping
     public ReturnValue<Map> getIllustrations(@RequestParam int p) {
         HashMap<String, Object> map = new HashMap<>();
-        map.put("illustraions", illustrationService.getIllustraions(p, null));
-        map.put("total", illustrationService.getIllustraionsCount(null));
+        map.put("illustraions", illustrationService.getIllustraions(p, null, null));
+        map.put("total", illustrationService.getIllustraionsCount(null, null));
         map.put("currentPage", p);
         return new ReturnValue(StatusMsg_200, map);
     }
@@ -43,9 +43,26 @@ public class IllustrationController {
         log.info("parameter================》{}, {}", findkey, p);
         findkey = "%" + findkey + "%";
         HashMap<String, Object> map = new HashMap<>();
-        map.put("illustraions", illustrationService.getIllustraions(p, findkey));
-        map.put("total", illustrationService.getIllustraionsCount(findkey));
+        map.put("illustraions", illustrationService.getIllustraions(p, findkey, null));
+        map.put("total", illustrationService.getIllustraionsCount(findkey, null));
         map.put("currentPage", p);
         return new ReturnValue<>(StatusMsg_200, map);
+    }
+
+    @GetMapping("/users/{uid}")
+    public ReturnValue<Map> getIllustrationsByUser(@PathVariable Long uid, @RequestParam int p) {
+        log.info("parameter================》{}, {}", uid, p);
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("illustraions", illustrationService.getIllustraions(p, null, uid));
+        map.put("total", illustrationService.getIllustraionsCount(null, uid));
+        map.put("currentPage", p);
+        return new ReturnValue<>(StatusMsg_200, map);
+    }
+
+    @DeleteMapping("/{id}")
+    public ReturnValue deleteIllustrations(@PathVariable Long id) {
+        log.info("parameter================》{}", id);
+        illustrationService.deleteIllustraion(id);
+        return new ReturnValue();
     }
 }

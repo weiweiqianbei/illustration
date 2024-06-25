@@ -8,10 +8,10 @@
                     </el-link>
                 </div>
                 <div class="index-data">
-                    <el-link style="font-weight: bold;" href="https://element-plus.org" target="_blank" :underline="false">{{ item.title }}</el-link>
+                    <el-link style="font-weight: bold;" :href="item.path" target="_blank" :underline="false">{{ item.title }}</el-link>
                 </div>
                 <div class="index-data">
-                    <el-link class="index-data-user" href="https://element-plus.org" target="_blank" :underline="false">
+                    <el-link class="index-data-user" :href="`http://localhost/users/${item.userId}`" :underline="false">
                         <el-avatar style="margin-right: 4px;" :size="24" :src="item.user.headPortrait" />
                         {{ item.user.userName }}
                     </el-link>
@@ -25,7 +25,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed, watch } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import { useStore } from 'vuex';
 import { useRouter, useRoute } from 'vue-router';
 
@@ -56,7 +56,7 @@ onMounted(async () => {
 
 const handleCurrentChange = (Number) => {
     const query = {p: Number};
-    router.push( { path: '/', query } );
+    router.push( { name: 'Artworks', query } );
     fetchData();
 }
 </script>

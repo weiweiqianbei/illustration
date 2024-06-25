@@ -9,7 +9,9 @@ import java.util.List;
 public interface IllustrationService {
     void handleFileUpload(MultipartFile file, UploadDto data);
 
-    List<IllustraionVO> getIllustraions(int page, String key);
+    List<IllustraionVO> getIllustraions(int page, String key, Long uid);
 
-    Long getIllustraionsCount(String key);
+    Long getIllustraionsCount(String key, Long uid);
+
+    void deleteIllustraion(Long id);
 }

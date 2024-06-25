@@ -61,12 +61,17 @@ public class IllustrationServiceImpl implements IllustrationService {
     }
 
     @Override
-    public List<IllustraionVO> getIllustraions(int page, String key) {
-        return illustraionDao.getIllustraions((page-1)*LIMIT, LIMIT, key);
+    public List<IllustraionVO> getIllustraions(int page, String key, Long uid) {
+        return illustraionDao.getIllustraions((page-1)*LIMIT, LIMIT, key, uid);
     }
 
     @Override
-    public Long getIllustraionsCount(String key) {
-        return illustraionDao.getIllustraionsCount(key);
+    public Long getIllustraionsCount(String key, Long uid) {
+        return illustraionDao.getIllustraionsCount(key, uid);
+    }
+
+    @Override
+    public void deleteIllustraion(Long id) {
+        illustraionDao.deleteIllustraion(id);
     }
 }

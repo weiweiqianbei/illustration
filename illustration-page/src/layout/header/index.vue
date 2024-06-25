@@ -45,7 +45,7 @@
                             </el-row>
                         </div>
                         <el-dropdown-menu>
-                            <!-- <el-dropdown-item>我的作品</el-dropdown-item> -->
+                            <el-dropdown-item @click="myUserInfo">我的作品</el-dropdown-item>
                             <el-dropdown-item @click="centerDialogVisible = true">设置</el-dropdown-item>
                             <el-dropdown-item divided>退出登录</el-dropdown-item>
                         </el-dropdown-menu>
@@ -202,6 +202,9 @@ const updateUser = async () => {
         })
         return;
     }
+}
+const myUserInfo = () => {
+    window.location.href = `/users/${ user.value.id }`;
 }
 </script>
 

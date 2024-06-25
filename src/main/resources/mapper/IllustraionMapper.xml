@@ -20,7 +20,10 @@
         FROM illustraion l LEFT JOIN user u ON l.user_id=u.id
         <where>
             <if test="findkey != null">
-                title LIKE #{findkey} OR remark LIKE #{findkey}
+                l.title LIKE #{findkey} OR l.remark LIKE #{findkey}
+            </if>
+            <if test="uid != null">
+                AND l.user_id = #{uid}
             </if>
         </where>
         ORDER BY id DESC
@@ -31,6 +34,9 @@
         <where>
             <if test="findkey != null">
                 title LIKE #{findkey} OR remark LIKE #{findkey}
+            </if>
+            <if test="uid != null">
+                AND user_id = #{uid}
             </if>
         </where>
     </select>

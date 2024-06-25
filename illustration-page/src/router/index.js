@@ -34,6 +34,11 @@ const constRoutes = [
         meta: {
           title: route => `#${decodeURIComponent(route.params.findkey)} | 作品`
         }
+      },
+      {
+        path: '/users/:uid',
+        name: 'Users',
+        component: () => import('@/views/users.vue')
       }
     ]
   },
